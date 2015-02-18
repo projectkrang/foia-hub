@@ -11,6 +11,7 @@ from django.utils.timezone import now
 import yaml
 
 from docusearch.models import Document
+from foia_hub.settings.base import BASE_DIR
 
 
 def is_date(d):
@@ -121,11 +122,21 @@ def process_agency(documents_directory, agency):
             process_office(agency_directory, agency, d)
 
 
+def _get_documents_directory():
+    """ Returns the default document directory """
+
+    return os.path.join(
+        BASE_DIR.replace('/foia-hub/foia_hub', ''), 'foia_docs')
+
+
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        documents_directory = '/vagrant/data/responsive'
-        agencies = os.listdir(documents_directory)
+        try:
+            documents_directory = args[0]
+        except IndexError:
+            documents_directory = _get_documents_directory()
 
+        agencies = os.listdir(documents_directory)
         for agency in agencies:
             process_agency(documents_directory, agency)
