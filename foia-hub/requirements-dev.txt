@@ -1,0 +1,8 @@
+#Requirements for development.
+
+flake8
+ipython
+mock
+sphinx
+coveralls
+django-debug-toolbar

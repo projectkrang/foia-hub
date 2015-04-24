@@ -1,11 +1,11 @@
-/temp-data
+foia-hub/temp-data
 .env
-/staticfiles
+foia-hub/staticfiles
 
 *.log
 *.db
 
-node_modules
+foia-hub/node_modules
 *__pycache__*
 *.pyc
 *.pyo
@@ -14,15 +14,18 @@ node_modules
 *.codekit
 
 # SCSS/SASS
-.sass-cache
-*/static/sass/bourbon
-*/static/sass/neat
-.webassets-cache
+foia-hub/.sass-cache
+*/foia_hub/static/sass/bourbon
+*/foia_hub/static/sass/neat
+foia-hub/.webassets-cache
 
-/todo.txt
+foia-hub/todo.txt
 
-/deploy/config.py
-/log
+foia-hub/deploy/config.py
+foia-hub/log
 
-docs/build
+foia-hub/docs/build
 .coverage
+foia-hub/docusearch.json
+
+.vagrant/

@@ -1,6 +1,0 @@
-
-workers = 2
-daemon = True
-
-pidfile = "/path/to/gunicorn.pid"
-accesslog = "/path/to/log/gunicorn.log"
