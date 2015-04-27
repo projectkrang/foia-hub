@@ -37,26 +37,37 @@ pyenv virtualenv 3.4.1 krang
 pyenv rehash
 pyenv activate krang
 
-
+echo 'Installing Requirments'
 pip install -r /vagrant/foia-hub/requirements.txt
 pip install -r /vagrant/foia-hub/requirements-dev.txt
 cd /vagrant/foia-hub
 
+echo 'Creating Database'
 sudo -u postgres createdb foia
 sudo -u postgres psql -d foia -c "CREATE USER foia WITH PASSWORD 'foia';"
+
+echo 'Setting up env vars'
 export DATABASE_URL="postgres://foia:foia@localhost:5432/foia"
 export FOIA_SECRET_SESSION_KEY="CHANGE THIS"
 
+echo 'Setting commands to run on startup'
 echo 'cd /vagrant/foia-hub' >> ~/.bash_profile
 echo 'pyenv activate krang' >> ~/.bash_profile
 echo 'export DATABASE_URL="postgres://foia:foia@localhost:5432/foia"' >> ~/.bash_profile
 echo 'export FOIA_SECRET_SESSION_KEY="CHANGE THIS"' >> ~/.bash_profile
-
 sudo service elasticsearch restart
-echo 'sudo service elasticsearch restart' >> ~/.bash_profile
+echo 'sudo service elasticsearch restart & sleep 15' >> ~/.bash_profile
 
-python manage.py migrate
+echo 'Migrating database and loading contacts'
+echo 'python manage.py migrate' >> ~/.bash_profile
 python manage.py load_agency_contacts
+
+echo 'Loading doc data and ensuring that data is reloaded on startup'
 python manage.py loaddata ../provision/dev/docusearch.json
+echo 'python manage.py loaddata ../provision/dev/docusearch.json
+' >> ~/.bash_profile
+
+echo 'Reindexing database and forcing reindex on load'
 python manage.py rebuild_index --noinput
+echo 'python manage.py rebuild_index --noinput' >> ~/.bash_profile
 EOF
