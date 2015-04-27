@@ -28,7 +28,7 @@ $ python manage.py runserver 0.0.0.0:8000
 
 You can then access the site from your web browser by going to http://192.168.19.61:8000/
 
-To halt Vagrant
+To suspend Vagrant
 ```
-vagrant halt
+vagrant suspend
 ```
