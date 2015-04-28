@@ -49,11 +49,13 @@ sudo -u postgres psql -d foia -c "CREATE USER foia WITH PASSWORD 'foia';"
 echo 'Setting up env vars'
 export DATABASE_URL="postgres://foia:foia@localhost:5432/foia"
 export FOIA_SECRET_SESSION_KEY="CHANGE THIS"
+export DJANGO_SETTINGS_MODULE=foia_hub.settings.dev
 
 echo 'Setting commands to run on startup'
 echo 'cd /vagrant/foia-hub' >> ~/.bash_profile
 echo 'pyenv activate krang' >> ~/.bash_profile
 echo 'export DATABASE_URL="postgres://foia:foia@localhost:5432/foia"' >> ~/.bash_profile
+echo 'export DJANGO_SETTINGS_MODULE=foia_hub.settings.dev' >> ~/.bash_profile
 echo 'export FOIA_SECRET_SESSION_KEY="CHANGE THIS"' >> ~/.bash_profile
 sudo service elasticsearch restart
 echo 'sudo service elasticsearch restart & sleep 15' >> ~/.bash_profile
