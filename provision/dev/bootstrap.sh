@@ -61,6 +61,7 @@ sudo service elasticsearch restart
 echo 'sudo service elasticsearch restart & sleep 15' >> ~/.bash_profile
 
 echo 'Migrating database and loading contacts'
+python manage.py migrate
 echo 'python manage.py migrate' >> ~/.bash_profile
 python manage.py load_agency_contacts
 
