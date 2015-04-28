@@ -1,0 +1,24 @@
+
+{% block body %}
+
+  <h1>Agencies</h1>
+
+  <div id="searchresults--index">
+      {% for letter in agencies|groupby('name.0') %}
+        <a href="#{{letter.grouper}}">{{letter.grouper}}</a>
+      {% endfor %}
+  </div>
+
+  {% for letter, agency_list in agencies|groupby('name.0') %}
+
+     <h2 id="{{letter}}">{{letter}}</h2>
+     <h4><a href="#searchresults--index">Back to Top</a></h4>
+
+      <ul>
+      {% for agency in agency_list %}
+        <li><a href="{{agency.slug}}">{{agency.name}}</a></li>
+      {% endfor %}
+      </ul>
+  {% endfor %}
+
+{% endblock %}

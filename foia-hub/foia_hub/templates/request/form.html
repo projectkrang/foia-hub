@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<header>
+  <h2>{{ profile.name }}</h2>
+</header>
+
+<section class="request agency">
+  {% if profile.description %}
+    <p>
+      {{ profile.description }}
+    </p>
+  {% endif %}
+</section>
+
+
+<section class="request form">
+
+  <form class="request" method="POST" action="{{ url('noop') }}">
+    {% csrf_token %}
+    <input type="hidden" class="agency_agency" name="agency" value="{{ profile.agency_slug }}" />
+
+    {% if profile.is_a == "office" %}
+      <input type="hidden" class="agency_office" name="office" value="{{ profile.office_slug }}" />
+    {% endif %}
+
+    <input type="hidden" class="agency_name" name="agency_name" value="{{ profile.agency_name }}" />
+
+
+    <fieldset id="name-email">
+      <input type="text" placeholder="First name" name="first_name" class="first_name" />
+      <input type="text" placeholder="Last name" name="last_name" class="last_name" />
+      <input type="email" placeholder="Email address" name="email" class="email" />
+    </fieldset>
+
+    <fieldset>
+      <legend>Describe the records you are requesting</legend>
+      <textarea class="request body" class="body" name="body"></textarea>
+    </fieldset>
+
+    <fieldset>
+      <label for="document_start">Documents Date Start (optional)</label>
+      <input type="text" id="document_start" name="documents_start" placeholder="Click to select" /><br />
+
+      <label for="document_end">Documents Date End (optional)</label>
+      <input type="text" id="document_end" name="documents_end" placeholder="Click to select" />
+    </fieldset>
+
+    <fieldset>
+      <legend>Fees</legend>
+      I'll pay up to
+      $<input type="text" class="upto" name="fee_limit" placeholder="0" />
+      in request processing fees.
+      <br/><br/>
+      If it's higher than <span class="fee-amount">$0</span>, stop and inform me before continuing.
+    </fieldset>
+
+    <fieldset>
+      <div data-role="fieldcontain">
+        <input id="fee-waiver-request" type="checkbox" name="fee_waiver" />
+        <label class="fee-waiver" for="fee-waiver-request">
+          I request that all fees associated with the request be waived.
+        </label>
+      </div>
+
+      <textarea id="fee-waiver-justification" placeholder="Fee waiver justification (required)"></textarea>
+    </fieldset>
+
+
+    <div class="request error">
+      There was an error submitting your request. Please fill out all the required fields above, and try again.
+    </div>
+
+    <input type="submit" value="Submit Request" />
+  </form>
+
+</section>
+
+{% endblock %}
